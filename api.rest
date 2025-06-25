@@ -1,0 +1,61 @@
+### Authentication API Tests
+# This file contains HTTP requests that can be executed using the REST Client extension in VS Code.
+# To run a request, click the "Send Request" link above each request.
+# Requests are separated by "###" lines.
+# Variables can be defined and used across requests.
+# The @authToken variable is set from the login response and used for authenticated requests.
+
+### Register a new user
+# @name register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Test User",
+  "phone": "1234567890"
+}
+
+### Login with registered user
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Variables
+# Token from login response
+@authToken = {{login.response.body.token}}
+
+# Alternative: Token from register response
+# @authToken = {{register.response.body.token}}
+
+### Get user profile (Protected route)
+GET http://localhost:3000/user/profile
+Authorization: Bearer {{authToken}}
+
+### Get all users (Protected route)
+GET http://localhost:3000/user
+Authorization: Bearer {{authToken}}
+
+### Get specific user by ID (Protected route)
+GET http://localhost:3000/user/1
+Authorization: Bearer {{authToken}}
+
+### Update user (Protected route)
+PATCH http://localhost:3000/user/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Updated Name",
+  "phone": "9876543210"
+}
+
+### Delete user (Protected route)
+DELETE http://localhost:3000/user/1
+Authorization: Bearer {{authToken}}

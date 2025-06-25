@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  phone     String
+  updatedAt DateTime @updatedAt
+  role      String   @default("user")
+  active    Boolean  @default(true)
+}
+
+model Services {
+  id          Int            @id @default(autoincrement())
+  name        String
+  description String
+  images      String[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  categoryId  Int?
+  active      Boolean        @default(true)
+  portfolios  Portfolio[]
+  orders      ServiceOrder[]
+  category    Category?      @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  name        String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  description String
+  active      Boolean    @default(true)
+  services    Services[]
+}
+
+model Portfolio {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  images      String[]
+  serviceId   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  links       String[]
+  service     Services @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  subject   String
+}
+
+model Testimonials {
+  id              Int      @id @default(autoincrement())
+  userName        String
+  userDesignation String
+  content         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ServiceOrder {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String
+  company   String
+  message   String
+  serviceId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  service   Services @relation(fields: [serviceId], references: [id])
+}

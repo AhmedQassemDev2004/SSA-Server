@@ -23,7 +23,7 @@ model User {
 model Services {
   id          Int            @id @default(autoincrement())
   name        String
-  description String
+  description String @db.Text
   images      Json   @db.Json
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
@@ -39,7 +39,7 @@ model Category {
   name        String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  description String
+  description String @db.Text
   active      Boolean    @default(true)
   services    Services[]
 }
@@ -47,7 +47,7 @@ model Category {
 model Portfolio {
   id          Int      @id @default(autoincrement())
   title       String
-  description String?
+  description String? @db.Text
   images      Json   @db.Json
   serviceId   Int
   createdAt   DateTime @default(now())
@@ -60,7 +60,7 @@ model Contact {
   id        Int      @id @default(autoincrement())
   name      String
   email     String
-  message   String
+  message   String @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   subject   String
@@ -69,7 +69,7 @@ model Contact {
 model Testimonials {
   id              Int      @id @default(autoincrement())
   userName        String
-  userDesignation String
+  userDesignation String @db.Text
   content         String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -81,7 +81,7 @@ model ServiceOrder {
   email     String
   phone     String
   company   String
-  message   String
+  message   String @db.Text
   serviceId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

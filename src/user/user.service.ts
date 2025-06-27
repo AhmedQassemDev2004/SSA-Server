@@ -66,10 +66,11 @@ export class UserService {
         if (existingUser) {
             throw new ConflictException('Email already exists');
         }
-
+        const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
         return this.prisma.user.create({
-            data: createUserDto,
+            data: {...createUserDto, password: hashedPassword},
         });
+    
     }
 
     async findAll(): Promise<Omit<User, 'password'>[]> {

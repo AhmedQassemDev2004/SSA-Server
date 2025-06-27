@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -24,7 +24,7 @@ model Services {
   id          Int            @id @default(autoincrement())
   name        String
   description String
-  images      String[]
+  images      Json   @db.Json
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   categoryId  Int?
@@ -48,11 +48,11 @@ model Portfolio {
   id          Int      @id @default(autoincrement())
   title       String
   description String?
-  images      String[]
+  images      Json   @db.Json
   serviceId   Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  links       String[]
+  links       Json   @db.Json
   service     Services @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 }
 

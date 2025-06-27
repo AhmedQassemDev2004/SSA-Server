@@ -19,7 +19,8 @@ async function bootstrap() {
 
     // Enable CORS
     app.enableCors({
-        origin: ['http://localhost:8080', 'http://localhost:5173'], // Allow both origins
+        // origin: ['http://localhost:8080', 'http://localhost:5173'], // Allow both origins
+        origin:['https://ssa-egypt.com'],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         credentials: true,
     });

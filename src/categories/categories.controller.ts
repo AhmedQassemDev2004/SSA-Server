@@ -4,6 +4,7 @@ import {CreateCategoryDto} from './dto/create-category.dto';
 import {UpdateCategoryDto} from './dto/update-category.dto';
 import {AdminGuard} from '../auth/admin.guard';
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
+import { Public } from '../auth/public.decorator';
 
 @Controller('categories')
 export class CategoriesController {
@@ -17,11 +18,13 @@ export class CategoriesController {
     }
 
     @Get()
+    @Public()
     findAll() {
         return this.categoriesService.findAll();
     }
 
     @Get(':id')
+    @Public()
     findOne(@Param('id') id: string) {
         return this.categoriesService.findOne(+id);
     }

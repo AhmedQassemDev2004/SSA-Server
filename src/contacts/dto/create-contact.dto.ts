@@ -11,6 +11,10 @@ export class CreateContactDto {
 
   @IsNotEmpty()
   @IsString()
+  phone: string;
+
+  @IsNotEmpty()
+  @IsString()
   subject: string;
 
   @IsNotEmpty()

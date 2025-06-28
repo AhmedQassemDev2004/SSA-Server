@@ -38,7 +38,7 @@ export class ContactsController {
   async export(@Res() res: Response) {
     const contacts = await this.contactsService.findAll();
     
-    const fields = ['id', 'name', 'email', 'subject', 'message', 'createdAt', 'updatedAt'];
+    const fields = ['id', 'name', 'email', 'phone', 'subject', 'message', 'createdAt', 'updatedAt'];
     const json2csvParser = new Parser({ fields });
     const csv = json2csvParser.parse(contacts);
 
